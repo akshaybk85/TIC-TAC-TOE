@@ -26,7 +26,7 @@ jobs:
 
       - name: Docker Build and push 
         run: |
-          docker build -t ti-tac-toe .
+          docker build -t tic-tac-toe .
           docker tag tic-tac-toe akshaybk/tic-tac-toe:latest
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push akshaybk/tic-tac-toe :latest
