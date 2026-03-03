@@ -32,5 +32,17 @@ jobs:
           docker push akshaybk/tic-tac-toe:latest
         env: 
           DOCKER_CLI_ACI: 1
-        
-          
+
+      - name: Trivy Docker image scan
+        run: trivy image akshaybk/tic-tac-toe:latest > trivy_image_scan_results.txt
+  
+  deploy:
+    needs: build-analyze-scan
+    runs-on: [self-hosted]
+    steps:
+      - name: Deploy to docker
+        run: |
+          docker pull akshaybk/tic-tac-toe:latest
+          docker run -d -p 3000:3000 akshaybk/tic-tac-toe:latest
+        env: 
+          DOCKER_CLI_ACI: 1 
