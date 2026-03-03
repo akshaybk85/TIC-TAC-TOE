@@ -23,3 +23,14 @@ jobs:
       
       - name: Trivy file scan
         run: trivy fs . > trivy_scan_results.txt
+
+      - name: Docker Build and push 
+        run: |
+          docker build -t ti-tac-toe .
+          docker tag tic-tac-toe akshaybk/tic-tac-toe:latest
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push akshaybk/tic-tac-toe :latest
+        env: 
+          DOCKER_CLI_ACI: 1
+        
+          
